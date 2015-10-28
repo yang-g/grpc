@@ -23,6 +23,7 @@ var searchData=
   ['got_5fevent',['GOT_EVENT',['../classgrpc_1_1_completion_queue.html#a6227657fb2f29291f80cd092f9baf572a5d8344849fb99341b7edaa9da7b42c08',1,'grpc::CompletionQueue']]],
   ['got_5fmessage',['got_message',['../classgrpc_1_1_call_op_recv_message.html#a95f94e74f704a7f40e1f2e30aba24c57',1,'grpc::CallOpRecvMessage::got_message()'],['../classgrpc_1_1_call_op_generic_recv_message.html#a1dc0ca6159bc74ec6cbfeacb06c697a0',1,'grpc::CallOpGenericRecvMessage::got_message()']]],
   ['grpc',['grpc',['../namespacegrpc.html',1,'']]],
+  ['grpc_2b_2b_2eh',['grpc++.h',['../grpc_09_09_8h.html',1,'']]],
   ['grpc_5fcustom_5fcodedinputstream',['GRPC_CUSTOM_CODEDINPUTSTREAM',['../config__protobuf_8h.html#adab2e3bf138e8ee14fc7dc7957618d2f',1,'config_protobuf.h']]],
   ['grpc_5fcustom_5fmessage',['GRPC_CUSTOM_MESSAGE',['../config__protobuf_8h.html#a9dada7a420bf3d91c428fa9699bd2ef3',1,'config_protobuf.h']]],
   ['grpc_5fcustom_5fprotobuf_5fint64',['GRPC_CUSTOM_PROTOBUF_INT64',['../config__protobuf_8h.html#a42a6e2b3f439893077e50cdaa72e98f2',1,'config_protobuf.h']]],
@@ -34,6 +35,7 @@ var searchData=
   ['grpc_5foverride',['GRPC_OVERRIDE',['../config_8h.html#a9a884d706be26697c9c892365a3402a9',1,'config.h']]],
   ['grpclibrary',['GrpcLibrary',['../classgrpc_1_1_grpc_library.html',1,'grpc']]],
   ['grpclibrary',['GrpcLibrary',['../classgrpc_1_1_grpc_library.html#af026f86430cf235d7eaf532231a44528',1,'grpc::GrpcLibrary']]],
+  ['grpc_20c_2b_2b_20api',['gRPC C++ API',['../index.html',1,'']]],
   ['io',['io',['../namespacegrpc_1_1protobuf_1_1io.html',1,'grpc::protobuf']]],
   ['protobuf',['protobuf',['../namespacegrpc_1_1protobuf.html',1,'grpc']]],
   ['testing',['testing',['../namespacegrpc_1_1testing.html',1,'grpc']]]
