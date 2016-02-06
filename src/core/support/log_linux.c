@@ -45,6 +45,7 @@
 
 #include <grpc/support/alloc.h>
 #include <grpc/support/log.h>
+#include <grpc/support/sync.h>
 #include <grpc/support/string_util.h>
 #include <grpc/support/time.h>
 #include <stdio.h>
@@ -54,11 +55,62 @@
 #include <linux/unistd.h>
 #include <sys/syscall.h>
 #include <unistd.h>
+#include <signal.h>
 
 static long gettid(void) { return syscall(__NR_gettid); }
 
+struct log_entry {
+  char* prefix;
+  char* msg;
+  struct log_entry* next;
+};
+typedef struct log_entry log_entry;
+
+static log_entry* g_logs_head = NULL;
+static log_entry* g_logs_tail = NULL;
+
+static void write_log_to_buffer(const char* prefix, const char* message) {
+  log_entry* new_entry = gpr_malloc(sizeof(log_entry));
+  new_entry->prefix = gpr_strdup(prefix);
+  new_entry->msg = gpr_strdup(message);
+  new_entry->next = NULL;
+  if (g_logs_tail == NULL) {
+    GPR_ASSERT(g_logs_head == NULL);
+    g_logs_head = g_logs_tail = new_entry;
+  } else {
+    g_logs_tail->next = new_entry;
+    g_logs_tail = new_entry;
+  }
+}
+
+static void dump_logs() {
+  log_entry* prev;
+  log_entry* current = g_logs_head;
+  while (current) {
+    fprintf(stderr, "%-60s %s\n", current->prefix, current->msg);
+    prev = current;
+    current = current->next;
+    gpr_free(prev);
+  }
+}
+
+static gpr_once g_sigint_handler = GPR_ONCE_INIT;
+
+static void catch_sigint(int sig) {
+  if (sig == SIGINT) {
+    dump_logs();
+  }
+  abort();
+}
+
+static void register_handler() {
+  signal(SIGINT, catch_sigint);
+}
+
 void gpr_log(const char *file, int line, gpr_log_severity severity,
              const char *format, ...) {
+  gpr_once_init(&g_sigint_handler, register_handler);
+
   char *message = NULL;
   va_list args;
   va_start(args, format);
@@ -98,7 +150,8 @@ void gpr_default_log(gpr_log_func_args *args) {
                gpr_log_severity_string(args->severity), time_buffer,
                (int)(now.tv_nsec), gettid(), display_file, args->line);
 
-  fprintf(stderr, "%-60s %s\n", prefix, args->message);
+  // fprintf(stderr, "%-60s %s\n", prefix, args->message);
+  write_log_to_buffer(prefix, args->message);
   gpr_free(prefix);
 }
 
